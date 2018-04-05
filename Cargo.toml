@@ -1,0 +1,13 @@
+[package]
+name = "qday"
+version = "0.1.0"
+authors = ["0x6d61"]
+
+[dependencies]
+serde="*"
+serde_derive="*"
+serde_json="*"
+docopt="*"
+reqwest="*"
+colored="*"
+time="*"
