@@ -27,6 +27,7 @@ fn main() {
 "
 Usage:
     qday <tag>
+	qday <tag> -t
     qday <tag> -d <time>
     qday <tag> -t -d <time>
     qday --help
