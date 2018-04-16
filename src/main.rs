@@ -18,26 +18,29 @@ fn main() {
     struct Args  {
         arg_tag: String,
         arg_time: String,
-        flag_t: bool,
+        flag_d: bool,
         flag_help: bool,
+		flag_t:bool,
     }
 
-    const USAGE: &'static str = 
+    const USAGE: &'static str =
 "
 Usage:
     qday <tag>
-    qday <tag> -t <time>
+    qday <tag> -d <time>
+    qday <tag> -t -d <time>
     qday --help
 
 Options:
     -h --help     Show this screen.
-    -t            date
+    -d            date
+	-t            title
 ";
 
     let args: Args = Docopt::new(USAGE).and_then(|d|d.deserialize())
         .unwrap_or_else(|e|e.exit());
 
-    let date = match args.flag_t {
+    let date = match args.flag_d {
         true => args.arg_time,
         false => time::strftime("%Y-%m-%d",&time::now()).unwrap(),
     };
@@ -47,16 +50,10 @@ Options:
     let topick_json: Value = serde_json::from_str(&resp).unwrap();
     let topick_array = &topick_json.as_array().unwrap();
     for i in topick_array.iter() {
-        println!("Title: {title:}\nUrl: {url:}",title=i["title"].as_str().unwrap(),url=i["url"].as_str().unwrap());
-    }
+		if !args.flag_t {
+				println!("{}",i["url"].as_str().unwrap());
+		}else{
+        	println!("Title: {title:}\nUrl: {url:}",title=i["title"].as_str().unwrap(),url=i["url"].as_str().unwrap());
+		}
+	}
 }
-
-
-
-
-
-
-
-
-
-
